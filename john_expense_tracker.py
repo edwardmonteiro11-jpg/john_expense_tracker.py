@@ -9,13 +9,13 @@ st.markdown(
     """
     <style>
     .stApp { 
-        background-color: #F9FAFB;  /* Light Gray */
+        background-color: #F9FAFB;  
         color: #000000; 
     }
     button[kind="primary"], .stButton>button {
-        background-color: #FFFFFF; /* White */
+        background-color: #FFFFFF; 
         color: #000000;
-        border: 1px solid #9CA3AF; /* Cool Gray */
+        border: 1px solid #9CA3AF; 
         font-weight: 500;
     }
     .stTextInput>div>input {
@@ -29,8 +29,8 @@ st.markdown(
         border: 1px solid #9CA3AF;
     }
     [data-testid="stSuccess"] {
-        background-color: #ECFDF5 !important;  /* Mint Green */
-        color: #10B981 !important;             /* Emerald Green */
+        background-color: #ECFDF5 !important;  
+        color: #10B981 !important;             
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
         color: #000000 !important;
@@ -52,7 +52,6 @@ creds = Credentials.from_service_account_info(
 )
 gc = gspread.authorize(creds)
 
-# <-- UPDATED SHEET ID -->
 SHEET_ID = "1wf5iUdB5n4CLwx03En3Ya6TxaPJEXRsE0flNNgbolvw"
 spreadsheet = gc.open_by_key(SHEET_ID)
 
@@ -108,24 +107,14 @@ if "amount_text" not in st.session_state:
 if "narration" not in st.session_state:
     st.session_state.narration = ""
 
-# Type selectbox (Expense default)
 t_type = st.selectbox("Type", ["Income", "Expense"], index=1)
-
-# Main head selectbox
 main_options = tuple(heads.get(t_type, {}).keys())
 main = st.selectbox("Main Head", main_options)
-
-# Sub head selectbox
 sub_options = tuple(heads[t_type][main])
 sub = st.selectbox("Sub Head", sub_options)
-
-# Narration input
 narration = st.text_input("Narration (optional)", key="narration")
-
-# Amount input
 amount_text = st.text_input("Amount", key="amount_text")
 
-# Save transaction button
 if st.button("Save Transaction"):
     if not amount_text.strip():
         st.warning("Please enter amount")
